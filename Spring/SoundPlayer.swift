@@ -46,7 +46,7 @@ public struct SoundPlayer {
                 AudioServicesCreateSystemSoundID(url as CFURL, &soundID)
                 Internal.cache[url] = soundID
             }
-            
+            ///播放系统声音
             AudioServicesPlaySystemSound(soundID)
             
         } else {
