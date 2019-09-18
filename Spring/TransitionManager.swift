@@ -22,6 +22,7 @@
 
 import UIKit
 
+///过渡动画
 public class TransitionManager: NSObject, UIViewControllerTransitioningDelegate, UIViewControllerAnimatedTransitioning {
     
     var isPresenting = true

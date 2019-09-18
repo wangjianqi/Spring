@@ -27,6 +27,7 @@ import UIKit
 public class KeyboardLayoutConstraint: NSLayoutConstraint {
     
     private var offset : CGFloat = 0
+    ///键盘高度
     private var keyboardVisibleHeight : CGFloat = 0
     
     @available(tvOS, unavailable)
@@ -44,7 +45,7 @@ public class KeyboardLayoutConstraint: NSLayoutConstraint {
     }
     
     // MARK: Notification
-    
+    ///键盘出现
     @objc func keyboardWillShowNotification(_ notification: Notification) {
         if let userInfo = notification.userInfo {
             if let frameValue = userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
@@ -54,8 +55,9 @@ public class KeyboardLayoutConstraint: NSLayoutConstraint {
             
             self.updateConstant()
             switch (userInfo[UIResponder.keyboardAnimationDurationUserInfoKey] as? NSNumber, userInfo[UIResponder.keyboardAnimationCurveUserInfoKey] as? NSNumber) {
+                ///解包
             case let (.some(duration), .some(curve)):
-                
+                ///曲线
                 let options = UIView.AnimationOptions(rawValue: curve.uintValue)
                 
                 UIView.animate(
@@ -63,6 +65,7 @@ public class KeyboardLayoutConstraint: NSLayoutConstraint {
                     delay: 0,
                     options: options,
                     animations: {
+                        ///layoutIfNeeded
                         UIApplication.shared.keyWindow?.layoutIfNeeded()
                         return
                     }, completion: { finished in

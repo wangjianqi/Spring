@@ -23,7 +23,7 @@
 import UIKit
 import Foundation
 
-
+///图片下载
 public class ImageLoader {
     
     var cache = NSCache<NSString, NSData>()

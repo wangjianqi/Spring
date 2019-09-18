@@ -24,6 +24,7 @@ import UIKit
 
 @IBDesignable class DesignableTabBarController: UITabBarController {
     
+    ///设置tint
     @IBInspectable var normalTint: UIColor = UIColor.clear {
         didSet {
             UITabBar.appearance().tintColor = normalTint
@@ -38,6 +39,7 @@ import UIKit
         }
     }
     
+    ///设置字体
     @IBInspectable var fontName: String = "" {
         didSet {
             UITabBarItem.appearance().setTitleTextAttributes([NSAttributedString.Key.foregroundColor: normalTint, NSAttributedString.Key.font: UIFont(name: fontName, size: 11)!], for: UIControl.State())
@@ -102,6 +104,7 @@ import UIKit
 }
 
 extension UIImage {
+    ///颜色转图片
     func imageWithColor(tintColor: UIColor) -> UIImage {
         UIGraphicsBeginImageContextWithOptions(self.size, false, self.scale)
         

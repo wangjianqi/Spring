@@ -24,6 +24,7 @@ import UIKit
 
 @IBDesignable public class DesignableLabel: SpringLabel {
 
+    ///设置行高
     @IBInspectable public var lineHeight: CGFloat = 1.5 {
         didSet {
             let font = UIFont(name: self.font.fontName, size: self.font.pointSize)

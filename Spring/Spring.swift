@@ -67,6 +67,7 @@ public class Spring : NSObject {
         commonInit()
     }
     
+    ///进入活跃是否动画
     func commonInit() {
         NotificationCenter.default.addObserver(self, selector: #selector(Spring.didBecomeActiveNotification(_:)), name: UIApplication.didBecomeActiveNotification, object: nil)
     }
@@ -82,8 +83,9 @@ public class Spring : NSObject {
     deinit {
         NotificationCenter.default.removeObserver(self, name: UIApplication.didBecomeActiveNotification, object: nil)
     }
-    
+    ///自动开始
     private var autostart: Bool { set { self.view.autostart = newValue } get { return self.view.autostart }}
+    ///自动隐藏
     private var autohide: Bool { set { self.view.autohide = newValue } get { return self.view.autohide }}
     private var animation: String { set { self.view.animation = newValue } get { return self.view.animation }}
     private var force: CGFloat { set { self.view.force = newValue } get { return self.view.force }}
@@ -101,11 +103,13 @@ public class Spring : NSObject {
     private var animateFrom: Bool { set { self.view.animateFrom = newValue } get { return self.view.animateFrom }}
     private var curve: String { set { self.view.curve = newValue } get { return self.view.curve }}
     
-    // UIView
+    // UIView：获取layer
     private var layer : CALayer { return view.layer }
+    ///变换
     private var transform : CGAffineTransform { get { return view.transform } set { view.transform = newValue }}
     private var alpha: CGFloat { get { return view.alpha } set { view.alpha = newValue } }
     
+    ///动画类型
     public enum AnimationPreset: String {
         case SlideLeft = "slideLeft"
         case SlideRight = "slideRight"
@@ -136,6 +140,8 @@ public class Spring : NSObject {
         case Swing = "swing"
     }
     
+    
+    ///动画曲线枚举
     public enum AnimationCurve: String {
         case EaseIn = "easeIn"
         case EaseOut = "easeOut"
@@ -369,7 +375,7 @@ public class Spring : NSObject {
             }
         }
     }
-    
+    ///动画时间曲线
     func getTimingFunction(curve: String) -> CAMediaTimingFunction {
         if let curve = AnimationCurve(rawValue: curve) {
             switch curve {
@@ -407,6 +413,7 @@ public class Spring : NSObject {
         return CAMediaTimingFunction(name: CAMediaTimingFunctionName.default)
     }
     
+    ///动画曲线
     func getAnimationOptions(curve: String) -> UIView.AnimationOptions {
         if let curve = AnimationCurve(rawValue: curve) {
             switch curve {
@@ -420,7 +427,9 @@ public class Spring : NSObject {
     }
     
     public func animate() {
+        ///出现
         animateFrom = true
+        ///设置动画
         animatePreset()
         setView {}
     }
@@ -457,6 +466,7 @@ public class Spring : NSObject {
         if shouldAnimateInLayoutSubviews {
             shouldAnimateInLayoutSubviews = false
             if autostart {
+                ///App状态
                 if UIApplication.shared.applicationState != .active {
                     shouldAnimateAfterActive = true
                     return
@@ -469,9 +479,13 @@ public class Spring : NSObject {
     
     func setView(completion: @escaping () -> ()) {
         if animateFrom {
+            ///位置移动
             let translate = CGAffineTransform(translationX: self.x, y: self.y)
+            ///比例
             let scale = CGAffineTransform(scaleX: self.scaleX, y: self.scaleY)
+            ///旋转
             let rotate = CGAffineTransform(rotationAngle: self.rotate)
+            ///两个动画
             let translateAndScale = translate.concatenating(scale)
             self.transform = rotate.concatenating(translateAndScale)
             
@@ -480,8 +494,11 @@ public class Spring : NSObject {
         
         UIView.animate( withDuration: TimeInterval(duration),
                         delay: TimeInterval(delay),
+                        ///阻尼
                         usingSpringWithDamping: damping,
+                        ///速度
                         initialSpringVelocity: velocity,
+                        ///可以交互
                         options: [getAnimationOptions(curve: curve), UIView.AnimationOptions.allowUserInteraction],
                         animations: { [weak self] in
                             if let _self = self
@@ -517,6 +534,7 @@ public class Spring : NSObject {
         opacity = 1
     }
     
+    ///重置
     func resetAll() {
         x = 0
         y = 0

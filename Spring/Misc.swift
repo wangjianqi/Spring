@@ -43,10 +43,12 @@ public func htmlToAttributedString(text: String) -> NSAttributedString! {
     return htmlString
 }
 
+///度数转换
 public func degreesToRadians(degrees: CGFloat) -> CGFloat {
     return degrees * CGFloat(CGFloat.pi / 180)
 }
 
+///延迟执行
 public func delay(delay:Double, closure: @escaping ()->()) {
     DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + Double(Int64(delay * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC), execute: closure)
 }

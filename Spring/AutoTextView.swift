@@ -10,6 +10,7 @@ import UIKit
 
 public class AutoTextView: UITextView {
 
+    ///固有的尺寸
     public override var intrinsicContentSize: CGSize {
         get {
             var size = self.sizeThatFits(CGSize(width: self.frame.size.width, height: CGFloat.greatestFiniteMagnitude))
