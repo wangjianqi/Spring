@@ -22,6 +22,7 @@
 
 import UIKit
 
+///协议
 @objc public protocol Springable {
     var autostart: Bool  { get set }
     var autohide: Bool  { get set }
@@ -46,6 +47,7 @@ import UIKit
     var transform : CGAffineTransform { get set }
     var alpha : CGFloat { get set }
     
+    ///动画
     func animate()
     func animateNext(completion: @escaping () -> ())
     func animateTo()
@@ -58,6 +60,7 @@ public class Spring : NSObject {
     private var shouldAnimateAfterActive = false
     private var shouldAnimateInLayoutSubviews = true
     
+    ///构造方法
     init(_ view: Springable) {
         self.view = view
         super.init()

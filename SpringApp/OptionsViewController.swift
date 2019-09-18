@@ -20,7 +20,7 @@ protocol OptionsViewControllerDelegate: class {
 }
 
 class OptionsViewController: UIViewController {
-    
+    //    squeezeUp:动画类型
     @IBOutlet weak var modalView: SpringView!
     
     @IBOutlet weak var dampingLabel: UILabel!
@@ -44,12 +44,13 @@ class OptionsViewController: UIViewController {
     var selectedY: CGFloat = 0
     var selectedRotate: CGFloat = 0
     
+    ///weak
     weak var delegate: OptionsViewControllerDelegate?
     var data: SpringView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        ///
         modalView.transform = CGAffineTransform(translationX: 0, y: 300)
         
         dampingSlider.setValue(Float(data.damping), animated: true)
@@ -112,7 +113,7 @@ class OptionsViewController: UIViewController {
     
     @IBAction func closeButtonPressed(_ sender: AnyObject) {
         dismiss(animated: true, completion: nil)
-        
+        ///sendAction:执行方法
         UIApplication.shared.sendAction(#selector(SpringViewController.maximizeView(_:)), to: nil, from: self, for: nil)
     }
     

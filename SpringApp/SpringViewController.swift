@@ -18,6 +18,7 @@ class SpringViewController: UIViewController, UIPickerViewDelegate, UIPickerView
     @IBOutlet weak var durationSlider: UISlider!
     @IBOutlet weak var forceSlider: UISlider!
     @IBOutlet weak var ballView: SpringView!
+    ///选择器
     @IBOutlet weak var animationPicker: UIPickerView!
     
     var selectedRow: Int = 0
@@ -82,10 +83,12 @@ class SpringViewController: UIViewController, UIPickerViewDelegate, UIPickerView
     
     func animateView() {
         setOptions()
+        ///开始动画
         ballView.animate()
     }
     
     func setOptions() {
+        ///配置动画参数
         ballView.force = selectedForce
         ballView.duration = selectedDuration
         ballView.delay = selectedDelay
@@ -98,7 +101,9 @@ class SpringViewController: UIViewController, UIPickerViewDelegate, UIPickerView
         ballView.y = selectedY
         ballView.rotate = selectedRotate
         
+        ///动画类型
         ballView.animation = animations[selectedRow].rawValue
+        ///动画曲线
         ballView.curve = animationCurves[selectedEasing].rawValue
     }
     
@@ -113,9 +118,11 @@ class SpringViewController: UIViewController, UIPickerViewDelegate, UIPickerView
         SpringAnimation.spring(duration: 0.7, animations: {
             self.view.transform = CGAffineTransform(scaleX: 1, y: 1)
         })
+    ///修改状态栏
         UIApplication.shared.setStatusBarStyle(UIStatusBarStyle.default, animated: true)
     }
 
+    ///动画类型
     let animations: [Spring.AnimationPreset] = [
         .Shake,
         .Pop,
@@ -145,6 +152,7 @@ class SpringViewController: UIViewController, UIPickerViewDelegate, UIPickerView
         .Flash
     ]
 
+    ///动画曲线
     var animationCurves: [Spring.AnimationCurve] = [
         .EaseIn,
         .EaseOut,
@@ -186,7 +194,7 @@ class SpringViewController: UIViewController, UIPickerViewDelegate, UIPickerView
     }
     
     @IBAction func ballButtonPressed(_ sender: AnyObject) {
-        
+        ///修改颜色
         UIView.animate(withDuration: 0.1, animations: {
             self.ballView.backgroundColor = UIColor(hex: "69DBFF")
         }, completion: { finished in
@@ -194,7 +202,7 @@ class SpringViewController: UIViewController, UIPickerViewDelegate, UIPickerView
                 self.ballView.backgroundColor = UIColor(hex: "#279CEB")
             })
         })
-        
+        ///动画
         animateView()
     }
     
@@ -203,6 +211,7 @@ class SpringViewController: UIViewController, UIPickerViewDelegate, UIPickerView
         isBall = !isBall
         let animation = CABasicAnimation()
         let halfWidth = ballView.frame.width / 2
+        ///给layer添加半径动画
         let cornerRadius: CGFloat = isBall ? halfWidth : 10
         animation.keyPath = "cornerRadius"
         animation.fromValue = isBall ? 10 : halfWidth
@@ -216,6 +225,7 @@ class SpringViewController: UIViewController, UIPickerViewDelegate, UIPickerView
         changeBall()
     }
     
+    ///重置
     func resetButtonPressed(_ sender: AnyObject) {
         selectedForce = 1
         selectedDuration = 1
@@ -252,6 +262,7 @@ class SpringViewController: UIViewController, UIPickerViewDelegate, UIPickerView
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         switch component {
         case 0:
+            ///动画
             selectedRow = row
             animateView()
         default:
@@ -260,8 +271,10 @@ class SpringViewController: UIViewController, UIPickerViewDelegate, UIPickerView
         }
     }
     
+    ///重写prepare
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let optionsViewController = segue.destination as? OptionsViewController {
+            ///配置
             optionsViewController.delegate = self
             setOptions()
             optionsViewController.data = ballView

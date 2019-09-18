@@ -11,6 +11,7 @@ import Spring
 
 class CodeViewController: UIViewController {
 
+    ///squeezeRight
     @IBOutlet weak var modalView: SpringView!
     @IBOutlet weak var codeTextView: UITextView!
     @IBOutlet weak var titleLabel: UILabel!
@@ -19,7 +20,7 @@ class CodeViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        ///x轴
         modalView.transform = CGAffineTransform(translationX: -300, y: 0)
         
         if data.animation != "" {
@@ -59,7 +60,7 @@ class CodeViewController: UIViewController {
     
     @IBAction func closeButtonPressed(_ sender: AnyObject) {
         UIApplication.shared.sendAction(#selector(SpringViewController.maximizeView(_:)), to: nil, from: self, for: nil)
-        
+        ///关闭
         modalView.animation = "slideRight"
         modalView.animateFrom = false
         modalView.animateToNext(completion: {
